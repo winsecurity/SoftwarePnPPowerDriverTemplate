@@ -3,7 +3,7 @@ Signature   = "$WINDOWS NT$"
 Class       = System
 ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
 Provider    = %ManufacturerName%
-DriverVer   = 02/06/2026,1.0.0.13
+DriverVer = 06/11/2026,18.36.18.784
 PnpLockdown = 1
 CatalogFile = softwarepnppower.cat
 
@@ -17,9 +17,9 @@ DefaultDestDir = 12   ; %SystemRoot%\System32\drivers
 softwarepnppower.sys = 1
 
 [Manufacturer]
-%ManufacturerName% = Standard,NT$ARCH$.10.0...16299
+%ManufacturerName% = Standard,NTamd64.10.0...16299
 
-[Standard.NT$ARCH$.10.0...16299]
+[Standard.NTamd64.10.0...16299]
 %MyDeviceDesc% = MyDevice_Install, Root\SOFTWAREPNPPOWER
 
 [MyDevice_Install]
