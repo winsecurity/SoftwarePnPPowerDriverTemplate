@@ -14,4 +14,9 @@ sorry for the mess of the files, i tried to push from visual studio but got erro
 My code is not perfect 😭, any bug fixes are welcome, use at your own risk of bsod 😭
 
 # DebugView screenshots
+## Installing/disabling/enabling driver
 ![Installing/disabling/enabling driver](images/debugview1.png)
+## Handling Normal IRPs
+![Handling irps](images/debugview2.png)
+## Handling QUERY_POWER & SET_POWER power irps
+![handling power irps](images/debugview3.png)
