@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Driver Files">
+      <UniqueIdentifier>{8E41214B-6785-4CFE-B992-037D68949A14}</UniqueIdentifier>
+      <Extensions>inf;inv;inx;mof;mc;</Extensions>
+    </Filter>
+    <Filter Include="Source Files\dispatchroutines">
+      <UniqueIdentifier>{f3a87a37-c5b6-49cb-b47b-77b93663df66}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="SoftwarePnPPower.inf">
+      <Filter>Driver Files</Filter>
+    </Inf>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="adddevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="createhandler.cpp">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="readhandler.cpp">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="devicecontrolhandler.cpp">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="irpdrainer.cpp">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="csq.cpp">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="pnphandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="powerhandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="irphandler.cpp">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adddevice.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="definitions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="createhandler.h">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClInclude>
+    <ClInclude Include="readhandler.h">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClInclude>
+    <ClInclude Include="devicecontrolhandler.h">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClInclude>
+    <ClInclude Include="irpdrainer.h">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClInclude>
+    <ClInclude Include="csq.h">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClInclude>
+    <ClInclude Include="pnphandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="powerhandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="irphandler.h">
+      <Filter>Source Files\dispatchroutines</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

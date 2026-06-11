@@ -1,0 +1,48 @@
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider    = %ManufacturerName%
+DriverVer   = 02/06/2026,1.0.0.13
+PnpLockdown = 1
+CatalogFile = softwarepnppower.cat
+
+[DestinationDirs]
+DefaultDestDir = 12   ; %SystemRoot%\System32\drivers
+
+[SourceDisksNames]
+1 = %DiskName%,,,\
+
+[SourceDisksFiles]
+softwarepnppower.sys = 1
+
+[Manufacturer]
+%ManufacturerName% = Standard,NT$ARCH$.10.0...16299
+
+[Standard.NT$ARCH$.10.0...16299]
+%MyDeviceDesc% = MyDevice_Install, Root\SOFTWAREPNPPOWER
+
+[MyDevice_Install]
+CopyFiles = DriverCopyFiles
+
+[DriverCopyFiles]
+softwarepnppower.sys
+
+[MyDevice_Install.Services]
+AddService = softwarepnppower, 0x00000002, MyService_Install
+
+[MyService_Install]
+DisplayName    = %MyServiceName%
+ServiceType    = 1        ; SERVICE_KERNEL_DRIVER
+StartType      = 3        ; DEMAND_START
+ErrorControl   = 1
+ServiceBinary  = %12%\softwarepnppower.sys
+
+
+
+
+[Strings]
+ManufacturerName = "Nikhil Industries"
+DiskName         = "Software pnp power Driver"
+MyDeviceDesc     = "Software PnP Power Driver"
+MyServiceName    = "Softwarepnppower"
