@@ -1,6 +1,8 @@
 # SoftwarePnPPowerDriverTemplate
 software driver that handles pnp and power irps
 
+sorry for the mess of the files, i tried to push from visual studio but got errors
+
 # Installation
 - Copy .inf and .sys file to the windows VM
 - Use pnputil to install the driver
