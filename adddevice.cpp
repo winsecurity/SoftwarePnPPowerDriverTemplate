@@ -53,7 +53,7 @@ extern "C" NTSTATUS AddDevice(PDRIVER_OBJECT driverobject, PDEVICE_OBJECT pdo) {
 		return STATUS_UNSUCCESSFUL;
 	}
 
-
+	*nullptr;
 	deviceobject->Flags |= DO_BUFFERED_IO;
 
 	pde->symboliclinkname = symboliclink;
