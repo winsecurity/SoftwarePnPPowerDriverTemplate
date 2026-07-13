@@ -1,4 +1,4 @@
-#include <ntddk.h>
+#include <ntifs.h>
 
 #include "adddevice.h"
 #include "createhandler.h"

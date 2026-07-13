@@ -200,6 +200,8 @@ extern "C" NTSTATUS powerhandler(PDEVICE_OBJECT fdo, PIRP irp) {
 
 	if (iostacklocation->MinorFunction == IRP_MN_SET_POWER) {
 
+
+
 		POWER_STATE_TYPE powerstatetype = iostacklocation->Parameters.Power.Type;
 		
 		

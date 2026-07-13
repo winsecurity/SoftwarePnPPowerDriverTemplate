@@ -1,6 +1,40 @@
 #pragma once
 
 
+
+typedef struct _EX_FAST_REF
+{
+	union
+	{
+		PVOID Object;
+		ULONG RefCnt : 3;
+		ULONG Value;
+	};
+} EX_FAST_REF, * PEX_FAST_REF;
+
+
+typedef struct _CONTROL_AREA
+{
+	ULONG_PTR Segment;
+	LIST_ENTRY DereferenceList;
+	ULONG NumberOfSectionReferences;
+	ULONG NumberOfPfnReferences;
+	ULONG NumberOfMappedViews;
+	ULONG NumberOfUserReferences;
+	ULONG u;
+	ULONG u1;
+	EX_FAST_REF FilePointer;
+	LONG ControlAreaLock;
+	ULONG StartingFrame;
+	ULONG_PTR WaitingForDeletion;
+	char u2[12];
+	INT64 LockedPages;
+} CONTROL_AREA, * PCONTROL_AREA;
+
+
+
+
+
 typedef enum {
 	STOPPED,
 	WORKING,
@@ -28,6 +62,8 @@ typedef struct {
 	IO_CSQ csq;
 	KEVENT workitemrunningevent;
 	IO_REMOVE_LOCK removelock;	
-	UNICODE_STRING symboliclinkname;
+	
 	DEVICE_CAPABILITIES devicecapabilities;
+	UNICODE_STRING symboliclinkname;
+	BOOLEAN isdeviceinterfaceenabled;
 }DEVICE_EXTENSION, *PDEVICE_EXTENSION;

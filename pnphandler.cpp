@@ -123,9 +123,28 @@ extern "C" NTSTATUS pnphandler(PDEVICE_OBJECT fdo, PIRP irp) {
 		NTSTATUS res = irp->IoStatus.Status;
 		if (NT_SUCCESS(res)) {
 			
+
 			KdPrint(("lower drivers succeeded start_Device\n"));
 
-			fdo->Flags &= ~DO_DEVICE_INITIALIZING;
+			KdPrint(("Enabling the device interface state\n"));
+			res = IoSetDeviceInterfaceState(&pde->symboliclinkname, TRUE);
+			if (res == STATUS_OBJECT_NAME_EXISTS) {
+				KdPrint(("device interface already enabled\n"));
+				pde->isdeviceinterfaceenabled = TRUE;
+			}
+			else if (NT_SUCCESS(res)) {
+				KdPrint(("device interface enabled successfully\n"));
+				pde->isdeviceinterfaceenabled = TRUE;
+			}
+			else {
+				KdPrint(("device interface enabling failed\n"));
+				pde->isdeviceinterfaceenabled = FALSE;
+				irp->IoStatus.Status = res;
+				IoCompleteRequest(irp, IO_NO_INCREMENT);
+				return res;
+			}
+		
+
 
 			pde->irpqueue.acceptirps = TRUE;
 
@@ -232,6 +251,21 @@ extern "C" NTSTATUS pnphandler(PDEVICE_OBJECT fdo, PIRP irp) {
 		
 		KdPrint(("we got IRP_MN_STOP_DEVICE\n"));
 
+		NTSTATUS res = IoSetDeviceInterfaceState(&pde->symboliclinkname, FALSE);
+		if (res == STATUS_OBJECT_NAME_EXISTS) {
+			KdPrint(("device interface already disabled\n"));
+			pde->isdeviceinterfaceenabled = FALSE;
+		}
+		else if (NT_SUCCESS(res)) {
+			KdPrint(("device interface disabled successfully\n"));
+			pde->isdeviceinterfaceenabled = FALSE;
+		}
+		else {
+			KdPrint(("device interface disabling failed\n"));
+			
+		}
+
+
 		// this is a command
 		// wait until  removelock is released completely
 		// meaning all irps are drained
@@ -249,6 +283,21 @@ extern "C" NTSTATUS pnphandler(PDEVICE_OBJECT fdo, PIRP irp) {
 	if (iostacklocation->MinorFunction == IRP_MN_SURPRISE_REMOVAL) {
 	
 		KdPrint(("we got IRP_MN_SURPRISE_REMOVAL\n"));
+
+
+		NTSTATUS res = IoSetDeviceInterfaceState(&pde->symboliclinkname, FALSE);
+		if (res == STATUS_OBJECT_NAME_EXISTS) {
+			KdPrint(("device interface already disabled\n"));
+			pde->isdeviceinterfaceenabled = FALSE;
+		}
+		else if (NT_SUCCESS(res)) {
+			KdPrint(("device interface disabled successfully\n"));
+			pde->isdeviceinterfaceenabled = FALSE;
+		}
+		else {
+			KdPrint(("device interface disabling failed\n"));
+
+		}
 
 		KIRQL oldirql;
 		KeAcquireSpinLock(&pde->irpqueue.spinlock, &oldirql);
@@ -340,8 +389,30 @@ extern "C" NTSTATUS pnphandler(PDEVICE_OBJECT fdo, PIRP irp) {
 
 		KdPrint(("we got IRP_MN_REMOVE_DEVICE\n"));
 
+
+		if (pde->isdeviceinterfaceenabled == FALSE) {
+			// device interface disabled already, probably by IRP_MN_SURPRISE_REMOVAL
+		}
+		else {
+			NTSTATUS res = IoSetDeviceInterfaceState(&pde->symboliclinkname, FALSE);
+			if (res == STATUS_OBJECT_NAME_EXISTS) {
+				KdPrint(("device interface already disabled\n"));
+				pde->isdeviceinterfaceenabled = FALSE;
+			}
+			else if (NT_SUCCESS(res)) {
+				KdPrint(("device interface disabled successfully\n"));
+				pde->isdeviceinterfaceenabled = FALSE;
+			}
+			else {
+				KdPrint(("device interface disabling failed\n"));
+
+			}
+		}
+
 		// this is a command
 		// we need to packup, stop accepting irps, drain irps and remove deviceobject
+
+
 
 		KIRQL oldirql;
 		KeAcquireSpinLock(&pde->irpqueue.spinlock, &oldirql);
@@ -369,7 +440,7 @@ extern "C" NTSTATUS pnphandler(PDEVICE_OBJECT fdo, PIRP irp) {
 
 
 		
-		IoDeleteSymbolicLink(&pde->symboliclinkname);
+		//IoDeleteSymbolicLink(&pde->symboliclinkname);
 
 
 		KEVENT event;
@@ -389,7 +460,7 @@ extern "C" NTSTATUS pnphandler(PDEVICE_OBJECT fdo, PIRP irp) {
 		KdPrint(("waiting for all removelocks to get released\n"));
 		IoReleaseRemoveLockAndWait(&pde->removelock, NULL);
 
-
+		RtlFreeUnicodeString(&pde->symboliclinkname);
 		IoFreeWorkItem(pde->irpqueue.workitem);
 
 		IoDetachDevice(pde->lowerdeviceobject);
